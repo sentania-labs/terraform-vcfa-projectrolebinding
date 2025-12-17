@@ -4,8 +4,6 @@ resource "kubernetes_manifest" "project_role_bindings" {
     "${u.kind}:${u.name}:${u.role}" => u
   }
 
-  depends_on = var.depends_on
-
   manifest = {
     apiVersion = "authorization.cci.vmware.com/v1alpha1"
     kind       = "ProjectRoleBinding"

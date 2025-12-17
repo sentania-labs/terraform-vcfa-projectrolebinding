@@ -23,9 +23,3 @@ EOT
     error_message = "users.kind must be either 'User' or 'Group'."
   }
 }
-
-variable "depends_on" {
-  type        = list(any)
-  description = "Optional dependencies (e.g. project creation)"
-  default     = []
-}
