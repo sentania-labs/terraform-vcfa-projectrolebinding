@@ -29,7 +29,6 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_depends_on"></a> [depends\_on](#input\_depends\_on) | Optional dependencies (e.g. project creation) | `list(any)` | `[]` | no |
 | <a name="input_project_name"></a> [project\_name](#input\_project\_name) | Name of the vRA / CCI project (used as the Kubernetes namespace) | `string` | n/a | yes |
 | <a name="input_users"></a> [users](#input\_users) | List of users or groups to bind to project roles.<br/><br/>- name: principal name (user UPN or group)<br/>- role: ProjectRole name (e.g. project-admin, project-member)<br/>- kind: User or Group | <pre>list(object({<br/>    name = string<br/>    role = string<br/>    kind = string # User or Group<br/>  }))</pre> | n/a | yes |
 
