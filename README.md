@@ -23,18 +23,18 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [kubernetes_manifest.project_role_bindings](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/manifest) | resource |
+| [kubernetes_manifest.this](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/manifest) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_project_name"></a> [project\_name](#input\_project\_name) | Name of the vRA / CCI project (used as the Kubernetes namespace) | `string` | n/a | yes |
-| <a name="input_users"></a> [users](#input\_users) | List of users or groups to bind to project roles.<br/><br/>- name: principal name (user UPN or group)<br/>- role: ProjectRole name (e.g. project-admin, project-member)<br/>- kind: User or Group | <pre>list(object({<br/>    name = string<br/>    role = string<br/>    kind = string # User or Group<br/>  }))</pre> | n/a | yes |
+| <a name="input_role"></a> [role](#input\_role) | Single project role binding definition.<br/><br/>- name: principal name (user UPN or group name)<br/>- role: ProjectRole name (e.g. project-admin, project-member)<br/>- kind: Subject kind (User or Group) | <pre>object({<br/>    name = string<br/>    role = string<br/>    kind = string # User or Group<br/>  })</pre> | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_project_role_bindings"></a> [project\_role\_bindings](#output\_project\_role\_bindings) | Created ProjectRoleBinding resources |
+| <a name="output_project_role_binding"></a> [project\_role\_binding](#output\_project\_role\_binding) | Created ProjectRoleBinding manifest |
 <!-- END_TF_DOCS -->
