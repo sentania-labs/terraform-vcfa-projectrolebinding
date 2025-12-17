@@ -1,7 +1,4 @@
-output "project_role_bindings" {
-  description = "Created ProjectRoleBinding resources"
-  value = {
-    for k, v in kubernetes_manifest.project_role_bindings :
-    k => v.manifest
-  }
+output "project_role_binding" {
+  description = "Created ProjectRoleBinding manifest"
+  value       = kubernetes_manifest.this.manifest
 }

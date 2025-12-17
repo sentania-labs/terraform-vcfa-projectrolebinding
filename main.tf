@@ -1,28 +1,23 @@
-resource "kubernetes_manifest" "project_role_bindings" {
-  for_each = {
-    for u in var.users :
-    "${u.kind}:${u.name}:${u.role}" => u
-  }
-
+resource "kubernetes_manifest" "this" {
   manifest = {
     apiVersion = "authorization.cci.vmware.com/v1alpha1"
     kind       = "ProjectRoleBinding"
 
     metadata = {
-      name      = "cci:${lower(each.value.kind)}:${each.value.name}"
+      name      = "cci:${lower(var.role.kind)}:${var.role.name}"
       namespace = var.project_name
     }
 
     roleRef = {
       apiGroup = "authorization.cci.vmware.com"
       kind     = "ProjectRole"
-      name     = each.value.role
+      name     = var.role.role
     }
 
     subjects = [
       {
-        kind = each.value.kind
-        name = each.value.name
+        kind = var.role.kind
+        name = var.role.name
       }
     ]
   }
