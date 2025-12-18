@@ -30,7 +30,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_project_name"></a> [project\_name](#input\_project\_name) | Name of the vRA / CCI project (used as the Kubernetes namespace) | `string` | n/a | yes |
-| <a name="input_role"></a> [role](#input\_role) | Single project role binding definition.<br/><br/>- name: principal name (user UPN or group name)<br/>- role: ProjectRole name (e.g. project-admin, project-member)<br/>- kind: Subject kind (User or Group) | <pre>object({<br/>    name = string<br/>    role = string<br/>    kind = string # User or Group<br/>  })</pre> | n/a | yes |
+| <a name="input_role"></a> [role](#input\_role) | Single project role binding definition.<br/><br/>- name: principal name (user or group) in UPN/email format (e.g. user@domain)<br/>- role: ProjectRole name (e.g. admin, edit, view)<br/>- kind: Subject kind (User or Group) | <pre>object({<br/>    name = string<br/>    role = string<br/>    kind = string # User or Group<br/>  })</pre> | n/a | yes |
 
 ## Outputs
 
