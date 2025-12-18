@@ -4,7 +4,7 @@ resource "kubernetes_manifest" "this" {
     kind       = "ProjectRoleBinding"
 
     metadata = {
-      name      = "cci:${lower(var.role.kind)}:${var.role.name}"
+      name      = "cci:${var.role.kind}:${var.role.name}"
       namespace = var.project_name
     }
 
