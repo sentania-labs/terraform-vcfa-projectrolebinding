@@ -13,13 +13,18 @@ variable "role" {
   description = <<EOT
 Single project role binding definition.
 
-- name: principal name (user UPN or group name)
-- role: ProjectRole name (e.g. project-admin, project-member)
+- name: principal name (user or group) in UPN/email format (e.g. user@domain)
+- role: ProjectRole name (e.g. admin, edit, view)
 - kind: Subject kind (User or Group)
 EOT
 
   validation {
     condition     = contains(["User", "Group"], var.role.kind)
     error_message = "role.kind must be either 'User' or 'Group'."
+  }
+
+  validation {
+    condition     = can(regex("^[^@]+@[^@]+$", var.role.name))
+    error_message = "role.name must be in UPN/email format (e.g. user@domain)."
   }
 }
