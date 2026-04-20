@@ -1,4 +1,6 @@
-# terraform-vcf-projectrolebinding
+# terraform-vcfa-projectrolebinding
+
+Terraform module — assigns a user or group a role within a VCF Automation (VCFA) project using the CCI `ProjectRoleBinding` Kubernetes manifest.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
