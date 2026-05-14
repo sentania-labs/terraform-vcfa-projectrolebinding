@@ -5,9 +5,5 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = ">= 3.0.0"
     }
-    vcfa = {
-      source  = "vmware/vcfa"
-      version = ">= 1.0.0"
-    }
   }
 }
