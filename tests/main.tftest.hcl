@@ -57,7 +57,7 @@ run "same_principal_two_roles_do_not_collide" {
   }
 
   assert {
-    condition     = output.project_role_binding.metadata.name != "cci:user:corp.local:alice:project-admin"
+    condition     = output.project_role_binding.metadata.name == "cci:user:corp.local:alice:project-viewer"
     error_message = "The same principal with a different role must get a different binding name"
   }
 }
