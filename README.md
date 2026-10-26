@@ -15,12 +15,12 @@ The caller must configure it before invoking the module. Typical configurations:
 
 ```hcl
 provider "kubernetes" {
-  config_path = "~/.kube/config"       # use default kubeconfig context
+  config_path    = "~/.kube/config"    # use default kubeconfig context
   # OR
-  host        = "https://api.cci.example.com"
-  token       = var.kubernetes_token
+  host           = "https://api.cci.example.com"
+  token          = var.kubernetes_token
   # OR
-  cluster_name = "my-cci-cluster"       # select a context from kubeconfig
+  config_context = "my-cci-cluster"    # select a context from kubeconfig
 }
 ```
 
@@ -41,22 +41,34 @@ common VCFA CCI role definitions.
 ## Identity mapping
 
 The module generates the Kubernetes resource name by splitting the principal's
-UPN (user@domain) on the `@` character:
+UPN (user@domain) on the `@` character and appending the role:
 
 ```
-cci:<lower(kind)>:<local-part>:<domain-part>
+cci:<lower(kind)>:<domain-part>:<local-part>:<role>
 ```
 
 Examples:
 
-| UPN                   | Generated name                    |
-|-----------------------|-----------------------------------|
-| `alice@corp.local`    | `cci:user:alice:corp.local`       |
-| `vcf-admins@corp.local` | `cci:group:vcf-admins:corp.local` |
+| UPN                     | Role             | Generated name                                  |
+|-------------------------|------------------|-------------------------------------------------|
+| `alice@corp.local`      | `project-admin`  | `cci:user:corp.local:alice:project-admin`       |
+| `vcf-admins@corp.local` | `project-viewer` | `cci:group:corp.local:vcf-admins:project-viewer` |
 
-This naming scheme makes it trivially readable which principal and kind a
-binding references, and avoids collisions when the same UPN is bound to
-different roles (each module invocation produces a distinct name).
+Because the role is part of the name, one principal can hold several roles in
+the same project without the bindings colliding. Names stay unique per
+project, kind, principal and role.
+
+### Breaking change: binding names now include the role
+
+Earlier versions generated `cci:<kind>:<domain-part>:<local-part>` with no role,
+so a principal given two roles in the same project produced two bindings with
+the same name. The role is now appended, which changes the name of every
+existing binding. Terraform will plan to destroy and recreate each one.
+
+**Migration:** upgrading replaces each existing binding (the old object is
+deleted and one with the new name is created), so the principal briefly loses
+the role during apply. To avoid the gap, create the new bindings first (for
+example from a second module block), then remove the old ones.
 
 ## Example
 
@@ -68,7 +80,7 @@ provider "kubernetes" {
 }
 
 module "project_role_binding" {
-  source = "sentania-labs/terraform-vcfa-projectrolebinding"
+  source = "git::https://github.com/sentania-labs/terraform-vcfa-projectrolebinding.git"
 
   project_name = "finance-prod"
 
