@@ -80,6 +80,11 @@ jobs:
         id: validate
         run: terraform validate -no-color
 
+      - name: Terraform Test
+        if: always()
+        id: test
+        run: terraform test -no-color
+
       - name: Terraform Fmt 
         if: always()
         id: fmt 
@@ -94,6 +99,7 @@ jobs:
             #### Terraform Format: \`${{ steps.fmt.outcome }}\` 
             #### Terraform Initialization: \`${{ steps.init.outcome }}\`
             #### Terraform Validation: \`${{ steps.validate.outcome }}\`
+            #### Terraform Test: \`${{ steps.test.outcome }}\`
   
             *Pushed by: @${{ github.actor }}*`;
   
